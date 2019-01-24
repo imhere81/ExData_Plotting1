@@ -1,0 +1,71 @@
+plot2 <- function (){
+  
+  library(ggplot2)
+  library(dplyr)
+  
+  
+ #readAndParse()
+ 
+  data <- read.csv("week1_2.csv" , sep = "," , header = TRUE)
+  
+  data$Date <- as.POSIXct(data$Date , format("%d/%m/%Y"))
+  
+  cols = c( 3, 4, 5,6,7,8,9);    
+  data[,cols] = apply(data[,cols], 2, function(x) as.numeric(as.character(x)));
+ 
+  #data <- removeNARows(data, col (data))
+  
+  data <- mutate(data, dt = as.POSIXct(paste(format(Date, format="%d/%m/%Y"),Time), format="%d/%m/%Y %H:%M:%S")) 
+  
+ 
+  png(filename="ExData_Plotting1/plot2.png" ,width=480,height=480,units="px",res=75)
+  
+ # data$Date <- as.factor(weekdays(data$Date , abbreviate=TRUE))
+  
+ 
+  plot(data$dt, data$Global_active_power, type ="l",
+       ylab = "Global Active Power (kW)", xlab = "")
+   
+  dev.off()
+  
+}
+
+
+removeNARows <- function(data, cols) {
+  subdata <- complete.cases(data[, cols])
+  return(data[subdata, ])
+}
+
+readAndParse <- function (){
+  
+  # colClasses = c("Date" ,"character" , "numeric", "numeric", "numeric", "numeric", "numeric", "numeric") 
+  source <- read.csv("household_power_consumption.txt" , sep = ";" , header = TRUE , na.strings = "?")
+  print (head(source))
+  
+  source$Date <- as.Date(source$Date , format("%d/%m/%Y"))
+  
+  startDate = as.Date("01/02/2007" , format("%d/%m/%Y"));
+  endDate = as.Date("02/02/2007" , format("%d/%m/%Y"));
+  
+  dates <- c(as.Date("01/02/2007" , format("%d/%m/%Y")) ,
+              as.Date("02/02/2007" , format("%d/%m/%Y")) ,
+              as.Date("03/02/2007" , format("%d/%m/%Y")))
+  
+  source$Global_active_power <- gsub("?",NA,source$Global_active_power, fixed = TRUE)
+  source$Global_reactive_power <- gsub("?",NA,source$Global_reactive_power, fixed = TRUE)
+  source$Voltage <- gsub("?",NA,source$Voltage, fixed = TRUE)
+  source$Global_intensity <- gsub("?",NA,source$Global_intensity, fixed = TRUE)
+  source$Sub_metering_1 <- gsub("?",NA,source$Sub_metering_1, fixed = TRUE)
+  source$Sub_metering_2 <- gsub("?",NA,source$Sub_metering_2, fixed = TRUE)
+  source$Sub_metering_3 <- gsub("?",NA,source$Sub_metering_3, fixed = TRUE)
+  
+  data <- subset(source, Date%in% dates, na.rm=TRUE)
+  cols = c( 3, 4, 5,6,7,8,9);    
+  data[,cols] = apply(data[,cols], 2, function(x) as.numeric(as.character(x)));
+  
+  print (str(data))
+  data <- removeNARows(data, col (data))
+  write.csv(data, "week1_2.csv" , row.names = FALSE)
+  
+  
+}
