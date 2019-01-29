@@ -4,7 +4,8 @@ plot3 <- function (){
   library(dplyr)
   
   
-  #readAndParse()
+  # Reads the Read the Data and Prepares the Data and Stores the subset in a FILE week1_3.csv
+  prepareTidyData()
   
   data <- read.csv("week1_3.csv" , sep = "," , header = TRUE)
   
@@ -18,7 +19,7 @@ plot3 <- function (){
   data <- mutate(data, dt = as.POSIXct(paste(format(Date, format="%d/%m/%Y"),Time), format="%d/%m/%Y %H:%M:%S")) 
   
   
-  png(filename="ExData_Plotting1/plot3.png" ,width=480,height=480,units="px",res=75)
+  png(filename="ExData_Plotting1/plot33.png" ,width=480,height=480,units="px",res=75)
   
   # data$Date <- as.factor(weekdays(data$Date , abbreviate=TRUE))
   
@@ -59,8 +60,7 @@ readAndParse <- function (){
   endDate = as.Date("02/02/2007" , format("%d/%m/%Y"));
   
   dates <- c(as.Date("01/02/2007" , format("%d/%m/%Y")) ,
-             as.Date("02/02/2007" , format("%d/%m/%Y")) ,
-             as.Date("03/02/2007" , format("%d/%m/%Y")))
+             as.Date("02/02/2007" , format("%d/%m/%Y")))
   
   #source$Global_active_power <- gsub("?",NA,source$Global_active_power, fixed = TRUE)
   #source$Global_reactive_power <- gsub("?",NA,source$Global_reactive_power, fixed = TRUE)

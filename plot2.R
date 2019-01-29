@@ -3,8 +3,8 @@ plot2 <- function (){
   library(ggplot2)
   library(dplyr)
   
-  
- #readAndParse()
+# Reads the Read the Data and Prepares the Data and Stores the subset in a FILE week1_2.csv
+ prepareTidyData()
  
   data <- read.csv("week1_2.csv" , sep = "," , header = TRUE)
   
@@ -13,12 +13,12 @@ plot2 <- function (){
   cols = c( 3, 4, 5,6,7,8,9);    
   data[,cols] = apply(data[,cols], 2, function(x) as.numeric(as.character(x)));
  
-  #data <- removeNARows(data, col (data))
+  
   
   data <- mutate(data, dt = as.POSIXct(paste(format(Date, format="%d/%m/%Y"),Time), format="%d/%m/%Y %H:%M:%S")) 
   
  
-  png(filename="ExData_Plotting1/plot2.png" ,width=480,height=480,units="px",res=75)
+  png(filename="ExData_Plotting1/plot22.png" ,width=480,height=480,units="px",res=75)
   
  # data$Date <- as.factor(weekdays(data$Date , abbreviate=TRUE))
   
@@ -36,7 +36,7 @@ removeNARows <- function(data, cols) {
   return(data[subdata, ])
 }
 
-readAndParse <- function (){
+prepareTidyData <- function (){
   
   # colClasses = c("Date" ,"character" , "numeric", "numeric", "numeric", "numeric", "numeric", "numeric") 
   source <- read.csv("household_power_consumption.txt" , sep = ";" , header = TRUE , na.strings = "?")
@@ -48,8 +48,7 @@ readAndParse <- function (){
   endDate = as.Date("02/02/2007" , format("%d/%m/%Y"));
   
   dates <- c(as.Date("01/02/2007" , format("%d/%m/%Y")) ,
-              as.Date("02/02/2007" , format("%d/%m/%Y")) ,
-              as.Date("03/02/2007" , format("%d/%m/%Y")))
+              as.Date("02/02/2007" , format("%d/%m/%Y")))
   
   source$Global_active_power <- gsub("?",NA,source$Global_active_power, fixed = TRUE)
   source$Global_reactive_power <- gsub("?",NA,source$Global_reactive_power, fixed = TRUE)

@@ -1,13 +1,15 @@
 plot1 <- function (){
   
-  #readAndParse()
+  # Reads the Read the Data and Prepares the Data and Stores the subset in a FILE week1.csv
+  prepareTidyData()
+ 
   data <- read.csv("week1.csv" , sep = "," , header = TRUE)
   data$Date <- as.POSIXct(data$Date , format("%d/%m/%Y"))
   cols = c( 3, 4, 5,6,7,8,9);    
   data[,cols] = apply(data[,cols], 2, function(x) as.numeric(as.character(x)));
   data <- removeNARows(data, col (data))
   
-  png(filename="ExData_Plotting1/plot1.png" ,width=480,height=480,units="px",res=75)
+  png(filename="ExData_Plotting1/plot11.png" ,width=480,height=480,units="px",res=75)
  
   hist(data$Global_active_power , col="red" , main="Global Active Power" ,xlab = "Global Active Power(kilowatts)")
   
@@ -21,7 +23,7 @@ removeNARows <- function(data, cols) {
   return(data[subdata, ])
 }
 
-readAndParse <- function (){
+prepareTidyData <- function (){
   
   # colClasses = c("Date" ,"character" , "numeric", "numeric", "numeric", "numeric", "numeric", "numeric") 
 source <- read.csv("household_power_consumption.txt" , sep = ";" , header = TRUE)
@@ -43,11 +45,6 @@ source$Sub_metering_3 <- gsub("?",NA,source$Sub_metering_3, fixed = TRUE)
 data <- subset(source, Date==startDate | Date==endDate, na.rm=TRUE)
 cols = c( 3, 4, 5,6,7,8,9);    
 data[,cols] = apply(data[,cols], 2, function(x) as.numeric(as.character(x)));
-
-
-print (dim(data))
-
-print (str(data))
 
 
 write.csv(data, "../week1.csv" , row.names = FALSE)

@@ -4,7 +4,8 @@ plot4 <- function (){
   library(dplyr)
   
   
-  #readAndParse()
+  # Reads the Read the Data and Prepares the Data and Stores the subset in a FILE week1_4.csv
+  prepareTidyData()
   
   data <- read.csv("week1_4.csv" , sep = "," , header = TRUE)
   
@@ -72,8 +73,7 @@ readAndParse <- function (){
   endDate = as.Date("02/02/2007" , format("%d/%m/%Y"));
   
   dates <- c(as.Date("01/02/2007" , format("%d/%m/%Y")) ,
-             as.Date("02/02/2007" , format("%d/%m/%Y")) ,
-             as.Date("03/02/2007" , format("%d/%m/%Y")))
+             as.Date("02/02/2007" , format("%d/%m/%Y")))
   
   
   
